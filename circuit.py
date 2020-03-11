@@ -11,25 +11,22 @@ def main():
 
 	pygame.init()
 
-	img, img_size = load_image_invert('circuits/first_try01.png')
-	# search_start(img)
+	img, img_np, _ = load_image('circuits/first_try01.png')
+	img_inv, img_inv_np, img_size = invert_image(img)
+	center = find_start(img)
 	
 	gameDisplay = pygame.display.set_mode((img_size[1], img_size[0]))
 	pygame.display.set_caption('Reinforcement Learning : Circuit')
 	gameDisplay_limit = gameDisplay.get_rect()
-	surf = pygame.surfarray.make_surface(img)
+	surf = pygame.surfarray.make_surface(img_inv_np)
 
 	running = True
 	player = Player(50,(500, 500))
 
 	while running:
 		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
+			if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
 				running = False
-
-		# pressed = pygame.key.get_pressed()
-		# if sum(pressed) != 0:
-		# 	player.move_arrows(pressed)	
 
 		gameDisplay.blit(surf, (0, 0))
 		# player.move_arrows()
