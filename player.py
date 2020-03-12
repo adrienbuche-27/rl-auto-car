@@ -27,8 +27,8 @@ class Player(pygame.sprite.Sprite):
         self.last_move = 0
         self.x = center[0]
         self.y = center[1]
-        self.rect = pygame.Rect(self.x, self.y, size/2, size)
-        self.size = (int(size/2), int(size))
+        self.size = size
+        self.shield_box = pygame.Rect(self.x-self.size, self.y-self.size, 2*size, 2*size)
         self.radius = 25
         self.shield_angle = shield_angle
         self.shields = []
@@ -48,13 +48,15 @@ class Player(pygame.sprite.Sprite):
 
 
     def draw_player(self, screen):
-        pygame.draw.circle(screen, colors['red'], (int(self.x), int(self.y)), 15)
+        pygame.draw.rect(screen, colors['aqua'], self.shield_box, 2)
+        pygame.draw.circle(screen, colors['red'], (int(self.x), int(self.y)), self.size)
 
     def draw_lines(self, screen):
         for shield in self.shields:
             pygame.draw.line(screen, colors['blue'], self.center, shield)
 
     def update_borders(self):
+        self.shield_box = pygame.Rect(self.x-self.size, self.y-self.size, 2*self.size, 2*self.size)
         r = self.radius
         self.shields = []
         for x in range(0,360, self.shield_angle):
@@ -97,9 +99,12 @@ class Player(pygame.sprite.Sprite):
         self.update_borders()
 
 
-    def out_of_boundaries(self):
-        if self.x < 0 or self.y < 0 or self.y > self.limit[3] or self.x > self.limit[2]:
-            return True
-        else:
-            return False
-
+    def out_of_boundaries(self, screen):
+        dangers = [self.shield_box.topleft, self.shield_box.midtop, self.shield_box.topright,
+                    self.shield_box.midright, self.shield_box.bottomright, self.shield_box.midbottom,
+                    self.shield_box.bottomleft, self.shield_box.midleft]
+        for d in dangers:
+            if screen.get_at(d) == (0, 0, 0, 255): # black pixel
+                return True
+        
+        return False

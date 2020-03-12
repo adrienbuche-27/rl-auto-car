@@ -24,7 +24,7 @@ def main():
 	surf = pygame.surfarray.make_surface(img_inv_np)
 	
 	running = True
-	player = Player(50, middle[1], 90, gameDisplay_limit)
+	player = Player(15, middle[1], 90, gameDisplay_limit)
 
 	while running:
 		for event in pygame.event.get():
@@ -32,15 +32,14 @@ def main():
 				running = False
 
 		gameDisplay.blit(surf, (0, 0))
+		pygame.draw.line(gameDisplay, colors['orange'], sl[:2], sl[2:], 3)
 
-		# player.move_arrows()
 		player.move_joystick()
 		player.draw_player(gameDisplay)
-		# print("Surf :" , surf.get_at((int(player.x), int(player.y))))
 		player.draw_lines(gameDisplay)
 		pygame.display.flip()
 		clock.tick(30)
-		if player.out_of_boundaries():
+		if player.out_of_boundaries(surf):
 			running = False
 
 	pygame.quit()
