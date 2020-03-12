@@ -77,7 +77,35 @@ def main_2():
 
 	pygame.quit()
 
+def main_3():
+	clock = pygame.time.Clock()
+
+	pygame.init()
+
+	gameDisplay = pygame.display.set_mode((800, 800))
+	pygame.display.set_caption('Rotation Test')
+	gameDisplay_limit = gameDisplay.get_rect()
+
+	running = True
+
+	player = Player(50,(400, 400))
+
+	while running:
+		gameDisplay.fill(colors['black'])
+
+		for event in pygame.event.get():
+			# Break out of the loop if "close"/esc is pressed
+			if event.type == QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+				running = False
+
+		player.move_joystick_test()
+		player.draw_player(gameDisplay)
+		player.draw_lines(gameDisplay)
+		pygame.display.flip()
+		clock.tick(30)
+
+	pygame.quit()
 
 
 if __name__ == '__main__':
-	main_2()
+	main_3()
