@@ -2,7 +2,7 @@
 
 With this project, I want to explore Reinforcement Learning with autonomus driving car via a Pygame Application. Let's Race !
 
-![](circuits/first_try01.png)
+![](circuits/intro.png)
 
 ## For Now
 

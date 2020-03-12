@@ -13,7 +13,7 @@ def main():
 
 	# for i in range(1,6):
 	# 	img, img_np, _ = load_image('circuits/first_try0{}.png'.format(i))
-	img, img_np, _ = load_image('circuits/first_try06.png')
+	img, img_np, _ = load_image('circuits/first_try01.png')
 	img_inv, img_inv_np, img_size = invert_image(img)
 	center, dims = find_start_ind(img)
 	sl , middle = find_start(img_inv_np, center, dims)
